@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OccasionMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Occasion">
+    <id column="occasion_id" jdbcType="INTEGER" property="occasionId" />
+    <id column="occasion_name" jdbcType="VARCHAR" property="occasionName" />
+  </resultMap>
+  
+  <select id="IdfindName" resultType="string">
+    SELECT `occasion_name` FROM `occasion` WHERE `occasion_id`=#{param1}
+  </select>
+  
+  <select id="NamefindId" resultType="integer">
+    SELECT `occasion_id` FROM `occasion` WHERE `occasion_name`=#{param1}
+  </select>
+  
+</mapper>

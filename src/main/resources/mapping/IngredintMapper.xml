@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.IngredintMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Ingredint">
+    <result column="cookbook_id" jdbcType="INTEGER" property="cookbookId" />
+    <result column="ingredint_name" jdbcType="VARCHAR" property="ingredintName" />
+    <result column="ingredint_num" jdbcType="VARCHAR" property="ingredintNum" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.example.demo.model.Ingredint">
+    insert into ingredint (cookbook_id, ingredint_name, ingredint_num
+      )
+    values (#{cookbookId,jdbcType=INTEGER}, #{ingredintName,jdbcType=VARCHAR}, #{ingredintNum,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <select id="get" resultMap="BaseResultMap">
+    SELECT * FROM `ingredint` WHERE `cookbook_id`=#{param1}
+  </select>
+  
+  <delete id="delete">
+    delete from `ingredint`
+    where `cookbook_id`=#{param1}
+  </delete>
+  
+  <select id="getCookbookList" resultType="integer">
+    SELECT DISTINCT `cookbook_id` FROM `ingredint` WHERE `ingredint_name` LIKE CONCAT('%',#{param1},'%') LIMIT #{param2}, #{param3}
+  </select>
+  
+</mapper>

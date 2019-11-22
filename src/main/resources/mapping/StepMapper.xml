@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.StepMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Step">
+    <result column="cookbook_id" jdbcType="INTEGER" property="cookbookId" />
+    <result column="step_inf" jdbcType="VARCHAR" property="stepInf" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.example.demo.model.Step">
+    insert into step (cookbook_id, step_inf
+      )
+    values (#{cookbookId,jdbcType=INTEGER}, #{stepInf,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="get" resultMap="BaseResultMap">
+    SELECT * FROM `step` WHERE `cookbook_id`=#{param1}
+  </select>
+  
+  <delete id="delete">
+    delete from `step`
+    where `cookbook_id`=#{param1}
+  </delete>
+</mapper>

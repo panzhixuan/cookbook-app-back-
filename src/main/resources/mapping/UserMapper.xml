@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.User">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_taste" jdbcType="INTEGER" property="userTaste" />
+    <result column="user_cuisine" jdbcType="INTEGER" property="userCuisine" />
+    <result column="user_occasion" jdbcType="INTEGER" property="userOccasion" />
+    <result column="user_photo" jdbcType="VARCHAR" property="userPhoto" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_address" jdbcType="VARCHAR" property="userAddress" />
+  </resultMap>
+  
+  <select id="getemail" resultType="string">
+    SELECT `user_email` FROM `user` WHERE `user_email`=#{param1}
+  </select>
+  
+  <insert id="register" parameterType="com.example.demo.model.User">
+    insert into user (user_email, user_password, user_taste, user_cuisine, user_occasion, user_photo, user_name, user_address
+      )
+    values (#{userEmail,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{userTaste,jdbcType=INTEGER}, #{userCuisine,jdbcType=INTEGER}, #{userOccasion,jdbcType=INTEGER}, #{userPhoto,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="login" resultMap="BaseResultMap">
+    SELECT * FROM `user` WHERE `user_email`=#{param1} AND `user_password`=#{param2}
+  </select>
+  
+  <update id="forgetpassword" parameterType="com.example.demo.model.User">
+    update `user`
+    set `user_password` = #{param2}
+    where `user_email` = #{param1}
+  </update>
+  
+  <update id="update" parameterType="com.example.demo.model.User">
+    update `user`
+    set `user_taste`= #{param2}, `user_cuisine`= #{param3}, `user_occasion`= #{param4}, `user_name`= #{param5}, `user_address`= #{param6}
+    where `user_id` = #{param1}
+  </update>
+  
+  <select id="getuserbyId" resultMap="BaseResultMap">
+    SELECT * FROM `user` WHERE `user_id`=#{param1}
+  </select>
+  
+</mapper>

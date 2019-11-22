@@ -1,0 +1,28 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    name: localhost
+    url: jdbc:mysql://localhost:3306/cookbook?useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  jmx:
+    enabled: false
+    default-domain: cookbook
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.demo.model

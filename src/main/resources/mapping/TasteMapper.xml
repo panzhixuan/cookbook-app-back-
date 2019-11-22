@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TasteMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Taste">
+    <id column="taste_id" jdbcType="INTEGER" property="tasteId" />
+    <id column="taste_name" jdbcType="VARCHAR" property="tasteName" />
+  </resultMap>
+  
+  <select id="IdfindName" resultType="string">
+    SELECT `taste_name` FROM `taste` WHERE `taste_id`=#{param1}
+  </select>
+  
+  <select id="NamefindId" resultType="integer">
+    SELECT `taste_id` FROM `taste` WHERE `taste_name`=#{param1}
+  </select>
+  
+</mapper>

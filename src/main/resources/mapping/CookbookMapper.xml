@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CookbookMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Cookbook">
+    <id column="cookbook_id" jdbcType="INTEGER" property="cookbookId" />
+    <result column="cookbook_likenum" jdbcType="INTEGER" property="cookbookLikenum" />
+    <result column="cookbook_visitnum" jdbcType="INTEGER" property="cookbookVisitnum" />
+    <result column="cookbook_tip" jdbcType="VARCHAR" property="cookbookTip" />
+    <result column="cookbook_nutrition" jdbcType="VARCHAR" property="cookbookNutrition" />
+    <result column="cookbook_photo" jdbcType="VARCHAR" property="cookbookPhoto" />
+    <result column="cookbook_name" jdbcType="VARCHAR" property="cookbookName" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="cookbook_taste" jdbcType="INTEGER" property="cookbookTaste" />
+    <result column="cookbook_cuisine" jdbcType="INTEGER" property="cookbookCuisine" />
+    <result column="cookbook_occasion" jdbcType="INTEGER" property="cookbookOccasion" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.example.demo.model.Cookbook">
+    insert into cookbook (cookbook_likenum, cookbook_visitnum, cookbook_tip, cookbook_nutrition, cookbook_photo, cookbook_name, user_id, cookbook_taste, cookbook_cuisine, cookbook_occasion
+      )
+    values (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9}, #{param10}
+      )
+  </insert>
+  
+  <select id="findbyPhoto" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `cookbook_photo`=#{param1}
+  </select>
+  
+  <select id="findbyuserId" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `user_id`=#{param1} LIMIT #{param2}, #{param3}
+  </select>
+  
+  <update id="update" parameterType="com.example.demo.model.Cookbook">
+    update `cookbook`
+    set `cookbook_likenum` = #{param1}, `cookbook_visitnum` = #{param2}, `cookbook_tip` = #{param3}, `cookbook_nutrition` = #{param4}, `cookbook_photo` = #{param5}, `cookbook_name` = #{param6}, `user_id` = #{param7}, `cookbook_taste` = #{param8}, `cookbook_cuisine` = #{param9}, `cookbook_occasion` = #{param10}
+    where `cookbook_id` = #{param11}
+  </update>
+  
+  <delete id="delete">
+    delete from `cookbook`
+    where `cookbook_id`=#{param1}
+  </delete>
+  
+  <update id="updatevisit" parameterType="com.example.demo.model.Cookbook">
+    update `cookbook`
+    set `cookbook_visitnum` = #{param2}
+    where `cookbook_id` = #{param1}
+  </update>
+  
+  <update id="updatelike" parameterType="com.example.demo.model.Cookbook">
+    update `cookbook`
+    set `cookbook_likenum` = #{param2}
+    where `cookbook_id` = #{param1}
+  </update>
+  
+  <select id="findbycookbookId" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `cookbook_id`=#{param1}
+  </select>
+  
+  <select id="findbyType" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `cookbook_taste`=#{param1} AND `cookbook_cuisine`=#{param2} AND `cookbook_occasion`=#{param3} LIMIT #{param4},#{param5}
+  </select>
+  
+  <select id="findbyCuisine" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `cookbook_cuisine`=#{param1} LIMIT #{param2}, #{param3}
+  </select>
+  
+  <select id="findbyName" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` WHERE `cookbook_name` LIKE CONCAT('%',#{param1},'%') LIMIT #{param2}, #{param3}
+  </select>
+  
+  <select id="getall" resultMap="BaseResultMap">
+    SELECT * FROM `cookbook` ORDER BY `cookbook_likenum` DESC
+  </select>
+  
+</mapper>

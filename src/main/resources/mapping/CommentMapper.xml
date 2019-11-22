@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Comment">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <id column="cookbook_id" jdbcType="INTEGER" property="cookbookId" />
+    <result column="comment_inf" jdbcType="VARCHAR" property="commentInf" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.example.demo.model.Comment">
+    insert into comment (user_id, cookbook_id, comment_inf
+      )
+    values (#{userId,jdbcType=INTEGER}, #{cookbookId,jdbcType=INTEGER}, #{commentInf,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <select id="get" resultMap="BaseResultMap">
+    SELECT * FROM `comment` WHERE `cookbook_id`=#{param1}
+  </select>
+  
+  <delete id="delete">
+    delete from `comment`
+    where `user_id`=#{param1} AND `cookbook_id`=#{param2}
+  </delete>
+ 
+</mapper>

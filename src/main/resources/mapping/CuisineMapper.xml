@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CuisineMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Cuisine">
+    <id column="cuisine_id" jdbcType="INTEGER" property="cuisineId" />
+    <id column="cuisine_name" jdbcType="VARCHAR" property="cuisineName" />
+  </resultMap>
+  
+  <select id="IdfindName" resultType="string">
+    SELECT `cuisine_name` FROM `cuisine` WHERE `cuisine_id`=#{param1}
+  </select>
+  
+  <select id="NamefindId" resultType="integer">
+    SELECT `cuisine_id` FROM `cuisine` WHERE `cuisine_name`=#{param1}
+  </select>
+</mapper>
