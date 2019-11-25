@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     name: localhost
-    url: jdbc:mysql://localhost:3306/cookbook?useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
-    username: root
-    password: 123456
+    url: jdbc:mysql://localhost:3306/mycookbook?useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+    username: user
+    password: shumeipai123
     driver-class-name: com.mysql.cj.jdbc.Driver
     filters: stat
     maxActive: 20

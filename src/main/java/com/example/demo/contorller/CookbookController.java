@@ -1,7 +1,10 @@
 package com.example.demo.contorller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
@@ -20,12 +23,18 @@ import com.example.demo.util.Imageutil;
 import com.example.demo.util.Result;
 import com.example.demo.util.ResultGenerator;
 import com.example.demo.util.Uploadphoto;
+import com.example.demo.service.ScoreService;
+import com.example.demo.model.Score;
+import com.example.demo.util.RecommandAlgorithm;
 
 @RestController
 @RequestMapping("/cookbook")
 public class CookbookController {
 	@Resource
     private CookbookService cookbookService;
+	
+	@Resource
+	private ScoreService scoreService;
 	
 	//上传头像
 	@PostMapping("/uploadcover")
@@ -204,6 +213,49 @@ public class CookbookController {
     public Result getall(@RequestBody String body) {
 		JSONObject jsonObject = JSONObject.parseObject(body);
 	    List<Cookbook> result=cookbookService.getall();
+	    if(result!=null) {
+	      return ResultGenerator.genSuccessResult(result);
+	    }
+	    return ResultGenerator.genFailResult("没有找到");
+    }
+	//获得全部菜谱
+	@PostMapping("/recommand")
+    public Result recommand(@RequestBody String body) {
+		JSONObject jsonObject = JSONObject.parseObject(body);
+		int userId = jsonObject.getInteger("userId");
+		
+		List<Score> allScore = scoreService.getAllScore();
+		
+		System.out.println(allScore.toString());
+		
+		Map<Integer, Map<Integer, Integer>> userItemScore = new HashMap<Integer, Map<Integer, Integer>>();
+		Map<Integer, Map<Integer, Integer>> userItemScoreToRecommand = new HashMap<Integer, Map<Integer, Integer>>();
+		
+		for(Score s : allScore) {
+			Map<Integer, Integer> itemScore = userItemScore.get(s.getUserId());
+			if(itemScore == null) {
+				itemScore = new HashMap<Integer, Integer>();
+				itemScore.put(s.getCookbookId(), s.getScore());
+				userItemScore.put(s.getUserId(), itemScore);
+			}
+			else {
+				itemScore.put(s.getCookbookId(), s.getScore());
+			}
+		}
+		
+		System.out.println(userItemScore.toString());
+		
+		RecommandAlgorithm recommand = new RecommandAlgorithm();
+		
+		List<Entry<Integer, Double>> result = recommand.cal(userItemScore, userItemScore, userId);
+		
+		//recommand.cal(userItemScore, userItemScore, userId);
+		
+		
+		
+		
+		
+	    //List<Cookbook> result=cookbookService.getall();
 	    if(result!=null) {
 	      return ResultGenerator.genSuccessResult(result);
 	    }
