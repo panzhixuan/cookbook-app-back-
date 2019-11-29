@@ -26,6 +26,7 @@ import com.example.demo.util.Uploadphoto;
 import com.example.demo.service.ScoreService;
 import com.example.demo.model.Score;
 import com.example.demo.util.RecommandAlgorithm;
+import com.example.demo.model.CookBookRecommandResult;
 
 @RestController
 @RequestMapping("/cookbook")
@@ -247,12 +248,20 @@ public class CookbookController {
 		
 		RecommandAlgorithm recommand = new RecommandAlgorithm();
 		
-		List<Entry<Integer, Double>> result = recommand.cal(userItemScore, userItemScore, userId);
+		List<Entry<Integer, Double>> tempResult = recommand.cal(userItemScore, userItemScore, userId);
 		
 		//recommand.cal(userItemScore, userItemScore, userId);
 		
+
 		
+		List<CookBookRecommandResult> result = new ArrayList<CookBookRecommandResult>();
 		
+		for(Entry<Integer, Double> oneResult : tempResult) {
+			CookBookRecommandResult temp = new CookBookRecommandResult();
+			temp.setCookBookId(oneResult.getKey());
+			temp.setRecommandScore(oneResult.getValue());
+			result.add(temp);
+		}
 		
 		
 	    //List<Cookbook> result=cookbookService.getall();
