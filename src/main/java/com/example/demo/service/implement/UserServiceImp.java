@@ -39,4 +39,16 @@ public class UserServiceImp implements UserService{
 	public User getuserbyId(int userId) {
 		return userMapper.getuserbyId(userId);
 	}
+	
+	public int getTaste(int userId) {
+		return userMapper.getTaste(userId);
+	}
+	
+	public int getCuisine(int userId) {
+		return userMapper.getCuisine(userId);
+	}
+	
+	public int getOccasion(int userId) {
+		return userMapper.getOccasion(userId);
+	}
 }

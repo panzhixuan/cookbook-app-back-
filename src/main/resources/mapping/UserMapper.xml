@@ -43,5 +43,8 @@
   <select id="getuserbyId" resultMap="BaseResultMap">
     SELECT * FROM `user` WHERE `user_id`=#{param1}
   </select>
-  
+  <select id="getTaste" resultType="int">select `user_taste` from `user` where `user_id` = #{param1}</select>
+  <select id="getCuisine" resultType="int">select `user_cuisine` from `user` where `user_id` = #{param1}</select>
+  <select id="getOccasion" resultType="int">select `user_occasion` from `user` where `user_id` = #{param1}</select>
+
 </mapper>

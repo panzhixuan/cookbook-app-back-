@@ -17,4 +17,10 @@ public interface UserMapper {
 	public void update(int userId,int userTaste,int userCuisine,int userOccasion,String userName,String userAddress);
 	
 	public User getuserbyId(int userId);
+	
+	public int getTaste(int userId);
+	
+	public int getCuisine(int userId);
+	
+	public int getOccasion(int userId);
 }

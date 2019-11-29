@@ -27,12 +27,16 @@ import com.example.demo.service.ScoreService;
 import com.example.demo.model.Score;
 import com.example.demo.util.RecommandAlgorithm;
 import com.example.demo.model.CookBookRecommandResult;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/cookbook")
 public class CookbookController {
 	@Resource
     private CookbookService cookbookService;
+	
+	@Resource
+	private UserService userService;
 	
 	@Resource
 	private ScoreService scoreService;
@@ -246,13 +250,12 @@ public class CookbookController {
 		
 		System.out.println(userItemScore.toString());
 		
+		
 		RecommandAlgorithm recommand = new RecommandAlgorithm();
 		
+		//协同过滤推荐
 		List<Entry<Integer, Double>> tempResult = recommand.cal(userItemScore, userItemScore, userId);
 		
-		//recommand.cal(userItemScore, userItemScore, userId);
-		
-
 		
 		List<CookBookRecommandResult> result = new ArrayList<CookBookRecommandResult>();
 		
@@ -262,6 +265,46 @@ public class CookbookController {
 			temp.setRecommandScore(oneResult.getValue());
 			result.add(temp);
 		}
+		
+		//考虑到用户的三个偏好
+		List<Cookbook> allCookbook = cookbookService.getall();
+		
+		int taste = userService.getTaste(userId);
+		int cuisine = userService.getCuisine(userId);
+		int occasion = userService.getOccasion(userId);
+		
+		
+		for(Cookbook oneCookbook : allCookbook) {
+			double tempScore = 0.0;
+			boolean exists = false;
+			if(taste == oneCookbook.getCookbookTaste()) {
+				tempScore += 1;
+			}
+			if(cuisine == oneCookbook.getCookbookCuisine()) {
+				tempScore += 1;
+			}
+			if(occasion == oneCookbook.getCookbookOccasion()) {
+				tempScore += 1;
+			}
+			if(tempScore == 0.0) {
+				continue;
+			}
+			
+			for(CookBookRecommandResult tempCBRR : result) {
+				if(oneCookbook.getCookbookId() == tempCBRR.getCookBookId()) {
+					tempCBRR.setRecommandScore(tempCBRR.getRecommandScore() + tempScore);
+					exists = true;
+					break;
+				}
+			}
+			if(exists == false) {
+				CookBookRecommandResult tempCBRR = new CookBookRecommandResult();
+				tempCBRR.setCookBookId(oneCookbook.getCookbookId());
+				tempCBRR.setRecommandScore(tempScore);
+				result.add(tempCBRR);
+			}
+		}
+		
 		
 		
 	    //List<Cookbook> result=cookbookService.getall();
