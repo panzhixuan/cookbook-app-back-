@@ -13,4 +13,6 @@ public interface ScoreService {
 	public List<Score> getall(int userId, int beginIndex, int offset);
 	
 	public List<Score> getAllScore();
+	
+	public void deleteByUserIdAndCookBookId(int userId, int cookBookId);
 }

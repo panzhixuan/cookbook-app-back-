@@ -16,6 +16,8 @@ public interface ScoreMapper {
 	public List<Score> getall(int userId, int begionIndex, int offset);
 	
 	public List<Score> getAllScore();
+	
+	public void deleteByUserIdAndCookBookId(int userId, int cookBookId);
 
 
 }

@@ -33,4 +33,7 @@ public class ScoreServiceImp implements ScoreService{
 		return scoreMapper.getAllScore();
 	}
 
+	public void deleteByUserIdAndCookBookId(int userId, int cookBookId) {
+		scoreMapper.deleteByUserIdAndCookBookId(userId, cookBookId);
+	}
 }

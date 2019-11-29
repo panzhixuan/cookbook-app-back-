@@ -23,4 +23,5 @@
   </select>
   <select id="getAllScore" resultMap="BaseResultMap">select * from `score`
   </select>
+  <delete id="deleteByUserIdAndCookBookId">delete from `score` where `user_id` = #{param1}    and `cookBook_id` = #{param2}</delete>
 </mapper>

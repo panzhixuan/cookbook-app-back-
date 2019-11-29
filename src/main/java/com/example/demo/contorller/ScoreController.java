@@ -67,4 +67,14 @@ public class ScoreController {
 	    scoreService.add(score);
 		return ResultGenerator.genSuccessResult();
     }
+	
+	//删除评分
+	@PostMapping("/delete")
+    public Result delete(@RequestBody String body) {
+		JSONObject jsonObject = JSONObject.parseObject(body);
+		int userId=jsonObject.getInteger("userId");
+	    int cookbookId=jsonObject.getInteger("cookbookId");
+	    scoreService.deleteByUserIdAndCookBookId(userId, cookbookId);
+		return ResultGenerator.genSuccessResult();
+    }
 }
